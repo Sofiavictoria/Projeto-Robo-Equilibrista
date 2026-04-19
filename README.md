@@ -124,7 +124,7 @@ Limitações mecânicas do robô
 | Nome | Curso |
 |------|--------|
 | Sofia Vitória Bispo da Silva | Engenharia Eletronica |
-|  | Engenharia Eletronica |
+| Victhor Alexandre | Engenharia Eletronica |
 
 **Orientação:** Prof. Roberto — Universidade de Brasília.
 
