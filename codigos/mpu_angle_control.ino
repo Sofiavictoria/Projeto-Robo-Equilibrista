@@ -133,9 +133,9 @@ void loop() {
   static unsigned long lastPrint = 0;
   if (!debug) {
     if (millis() - lastPrint > 50) {
-      Serial.print(" Filtro:");
+      Serial.print("Filtro:");
       Serial.print(angle, 2);
-      Serial.print("Acelerômetro:");
+      Serial.print(" Acelerômetro:");
       Serial.print(accelAngle, 2);
       Serial.print(" Giroscópio:");
       Serial.print(gy, 2);
