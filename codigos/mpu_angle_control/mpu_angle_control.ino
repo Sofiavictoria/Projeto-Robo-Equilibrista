@@ -46,9 +46,9 @@ void calibrateSensors() {
   gyroBiasY = sumGyroY / samples;
   
   // Viés do acelerômetro
-  accelBiasX = (sumAccelX / samples) - 9.81; // devemos retirar G da coordenada apontando para cima
+  accelBiasZ = (sumAccelZ / samples) + 9.81; // devemos retirar G da coordenada apontando para cima
   accelBiasY = (sumAccelY / samples) - 0.0;
-  accelBiasZ = (sumAccelZ / samples) - 0.0;
+  accelBiasX = (sumAccelX / samples) - 0.0;
   if (!debug) {
     Serial.print("Gyro Y bias: ");
     Serial.print(gyroBiasY * 180/PI, 4);
@@ -97,7 +97,7 @@ void setup(void) {
   // registrando os primeiros valores do sensor, corrigidos pelo bias medido
   float ax = a.acceleration.x - accelBiasX;
   float az = a.acceleration.z - accelBiasZ;
-  angle = atan2(az, ax) * 180.0 / PI; // angulo inicial parado
+  angle = atan2(ax, -az) * 180.0 / PI; // angulo inicial parado
 
   lastTime = micros();
 }
@@ -123,7 +123,7 @@ void loop() {
 
   float gy = (g.gyro.y - gyroBiasY) * 180.0 / PI;  // deg/s
   
-  float accelAngle = atan2(az, ax) * 180.0 / PI;
+  float accelAngle = atan2(ax, -az) * 180.0 / PI;
 
   angle = alpha * (angle + gy * dt) + (1.0 - alpha) * accelAngle;
 
@@ -139,6 +139,10 @@ void loop() {
       Serial.print(accelAngle, 2);
       Serial.print(" Giroscópio:");
       Serial.print(gy, 2);
+      Serial.print(" Z:");
+      Serial.print(az, 2);
+      Serial.print(" X:");
+      Serial.print(ax, 2);
       Serial.println();
       lastPrint = millis();
     }
