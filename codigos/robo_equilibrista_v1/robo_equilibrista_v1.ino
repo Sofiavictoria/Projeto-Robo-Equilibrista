@@ -11,12 +11,12 @@ Adafruit_MPU6050 mpu; // Objeto do MPU6050
 bool debug = false;
 
 // ---------- Pinos do Driver L298N ----------
-const int ENA = 5;   // PWM motor direito
-const int IN1 = 6;
-const int IN2 = 7;
-const int IN3 = 8;
-const int IN4 = 9;
-const int ENB = 10;  // PWM motor esquerdo
+// const int ENA = 5;   // PWM motor direito
+const int IN1 = 5;
+const int IN2 = 6;
+const int IN3 = 9;
+const int IN4 = 10;
+// const int ENB = 10;  // PWM motor esquerdo
 
 // variáveis do filtro complementar
 float angle = 0.0;           // angulo apos o filtro complementar
@@ -37,15 +37,22 @@ double integral = 0, derivada = 0;
 double saidaPID = 0;
 
 // >>> Estes 3 valores PRECISAM ser ajustados na pratica <<<
-double Kp = 25;
+// double Kp = -25;
+// double Ki = -140;
+// double Kd = -0.8;
+
+double Kp = 15;
 double Ki = 140;
-double Kd = 0.8;
+double Kd = 0.5;
+// double Kp = -442.5 ;
+// double Ki = -2431;
+// double Kd = 20;
 
 void calibrateSensors() {
   Serial.println("Calibrando. Nao mova o sensor...");
   delay(2000);
 
-  const int samples = 500;
+  const int samples = 2000;
   float sumGyroY = 0;
   float sumAccelX = 0, sumAccelY = 0, sumAccelZ = 0;
 
@@ -80,21 +87,21 @@ void calibrateSensors() {
   }
 }
 
+
 void moverMotores(int velocidade) {
   velocidade = constrain(velocidade, -255, 255);
 
   if (velocidade >= 0) {
     // Frente
-    digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);
-    digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW);
+    analogWrite(IN2, velocidade); digitalWrite(IN1, LOW);
+    analogWrite(IN4, velocidade); digitalWrite(IN3, LOW);
   } else {
     // Tras
-    digitalWrite(IN1, LOW); digitalWrite(IN2, HIGH);
-    digitalWrite(IN3, LOW); digitalWrite(IN4, HIGH);
-    velocidade = -velocidade;
+    analogWrite(IN1, -velocidade); digitalWrite(IN2, LOW);
+    analogWrite(IN3, -velocidade); digitalWrite(IN4, LOW);
   }
-  analogWrite(ENA, velocidade);
-  analogWrite(ENB, velocidade);
+  // analogWrite(ENA, velocidade);
+  // analogWrite(ENB, velocidade);
 }
 
 void setup(void) {
@@ -103,9 +110,10 @@ void setup(void) {
     delay(10);
   }
 
-  pinMode(ENA, OUTPUT); pinMode(ENB, OUTPUT);
+  // pinMode(ENA, OUTPUT); pinMode(ENB, OUTPUT);
   pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT); pinMode(IN4, OUTPUT);
+
 
   if (!mpu.begin()) {
     Serial.println("MPU6050 nao conectada");

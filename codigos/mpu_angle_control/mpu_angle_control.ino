@@ -27,7 +27,7 @@ void calibrateSensors() {
   delay(2000);
   
   //fazendo uma média das primeiras 500 leituras dos sensores, para coletar o viés
-  const int samples = 500;
+  const int samples = 1000;
   float sumGyroY = 0;
   float sumAccelX = 0, sumAccelY = 0, sumAccelZ = 0;
   
