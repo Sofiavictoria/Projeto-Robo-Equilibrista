@@ -52,7 +52,7 @@ void calibrateSensors() {
   Serial.println("Calibrando. Nao mova o sensor...");
   delay(2000);
 
-  const int samples = 2000;
+  const int samples = 1000;
   float sumGyroY = 0;
   float sumAccelX = 0, sumAccelY = 0, sumAccelZ = 0;
 
