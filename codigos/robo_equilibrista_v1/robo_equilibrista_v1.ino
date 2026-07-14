@@ -41,12 +41,14 @@ double saidaPID = 0;
 // double Ki = -140;
 // double Kd = -0.8;
 
-double Kp = 15;
-double Ki = 140;
-double Kd = 0.5;
-// double Kp = -442.5 ;
-// double Ki = -2431;
-// double Kd = 20;
+
+// double Kp = 12.5077;
+// double Ki = 350.0724;
+// double Kd = 0.3098;
+
+double Kp = 14.2;
+double Ki = 130;
+double Kd = 0.52;
 
 void calibrateSensors() {
   Serial.println("Calibrando. Nao mova o sensor...");
